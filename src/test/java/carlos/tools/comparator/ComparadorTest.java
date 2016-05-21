@@ -47,7 +47,7 @@ public class ComparadorTest extends TestCase {
 
 		listaInicial = generarListaInicial();
 
-		listaNueva = clonarLista(listaInicial);
+		listaNueva = generarListaNueva(listaInicial);
 
 		nuevosCoches = generarCochesPruebaA(listaNueva);
 
@@ -62,30 +62,19 @@ public class ComparadorTest extends TestCase {
 
 	private List<Coche> generarListaInicial() {
 
-		List<Coche> listaInicial = new ArrayList<Coche>();
-
-		Coche coche;
-
-		for (int i = 0; i < 3; i++) {
-
-			coche = generarCocheAleatorio();
-
-			listaInicial.add(coche);
-		}
+		List<Coche> listaInicial = CocheTestUtils.generarListaCochesAleatorios(3);
 
 		return listaInicial;
 	}
+	
+	private List<Coche> generarListaNueva(List<Coche> listaCochesInicial) {
 
-	private List<Coche> clonarLista(List<Coche> lista) {
+		List<Coche> listaNueva = CocheTestUtils.clonarListaCoches(listaCochesInicial);
 
-		List<Coche> listaClon = new ArrayList<Coche>();
-
-		for (Coche elemento : lista) {
-			listaClon.add(elemento.clone());
-		}
-
-		return listaClon;
+		return listaNueva;
 	}
+
+	
 
 	/**
 	 * Añado conches nuevas a la lista
@@ -95,16 +84,7 @@ public class ComparadorTest extends TestCase {
 	 */
 	private List<Coche> generarCochesPruebaA(List<Coche> listaInicial) {
 
-		List<Coche> listaPruebaA = new ArrayList<Coche>();
-
-		Coche coche;
-
-		for (int i = 0; i < 2; i++) {
-
-			coche = generarCocheAleatorio();
-
-			listaPruebaA.add(coche);
-		}
+		List<Coche> listaPruebaA = CocheTestUtils.generarListaCochesAleatorios(2);
 
 		listaInicial.addAll(listaPruebaA);
 
@@ -122,9 +102,10 @@ public class ComparadorTest extends TestCase {
 		List<Coche> listaPruebaM = new ArrayList<Coche>();
 
 		for (int i = 0; i < 2; i++) {
+			
 			coche = listaInicial.get(i);
-			coche.setColor(randomString(6));
-			coche.setPrecio(randomFloat());
+		
+			coche = CocheTestUtils.modificarCocheAleatorio(coche);
 
 			listaPruebaM.add(coche);
 		}
@@ -154,8 +135,6 @@ public class ComparadorTest extends TestCase {
 	 */
 	private boolean comprobarExitoPrueba(List<CocheIncremental> cochesIncremental, List<Coche> nuevosCoches,
 			List<Coche> cochesModificados, List<Coche> cochesBorrados) {
-		
-		Boolean exito;
 
 		Boolean nuevosOk, modificadosOk, borradoOk;
 
@@ -207,59 +186,5 @@ public class ComparadorTest extends TestCase {
 		return null;
 	}
 
-	private Coche generarCocheAleatorio() {
-
-		Coche coche;
-
-		String matricula, color;
-		Float precio;
-
-		matricula = randomString(7);
-		color = randomString(6);
-		precio = randomFloat();
-
-		coche = new Coche(matricula, color, precio);
-
-		return coche;
-	}
-
-	/**
-	 * Genera String con cartacteres UTF16 entre el 65 y el 122 (A-z)
-	 * 
-	 * @param numCaracteres
-	 * @return
-	 */
-	private String randomString(int numCaracteres) {
-		double c;
-		char[] chars;
-		int unicode;
-		String string = "";
-
-		for (int i = 0; i < numCaracteres; i++) {
-
-			c = Math.random();
-			c = c * 100;
-			c = c % 58;
-			c = c + 65;
-
-			unicode = (int) c;
-			// unicode = 41;
-
-			// unicode = Integer.parseInt((new Double(c)).toString());
-
-			chars = Character.toChars(unicode);
-
-			string = string.concat(String.copyValueOf(chars));
-		}
-
-		return string;
-	}
-
-	private Float randomFloat() {
-		Float flotante;
-
-		flotante = new Float(Math.random() * 10000);
-
-		return flotante;
-	}
+	
 }

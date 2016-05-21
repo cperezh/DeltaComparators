@@ -1,5 +1,7 @@
 package carlos.tools.comparator.entidades;
 
+import java.util.List;
+
 public class Coche {
 
 	private String matricula;
@@ -10,10 +12,16 @@ public class Coche {
 
 	}
 	
-	public Coche(String matricula,String color,Float precio){
+	public Coche(String matricula, String color, Float precio) {
 		this.matricula = matricula;
 		this.color = color;
 		this.precio = precio;
+	}
+	
+	public Coche(Coche coche){
+		this.matricula = coche.getMatricula();
+		this.color = coche.getColor();
+		this.precio = coche.getPrecio();
 	}
 
 	public String getMatricula() {
@@ -76,29 +84,47 @@ public class Coche {
 			return false;
 		return true;
 	}
-	
-	public Coche clone(){
-		
+
+	public Coche clone() {
+
 		Coche coche = new Coche();
-		
+
 		coche.color = new String(this.color);
-		
+
 		coche.matricula = new String(this.matricula);
-		
+
 		coche.precio = new Float(this.precio);
-		
+
 		return coche;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(matricula);
 		sb.append("|");
 		sb.append(color);
 		sb.append("|");
 		sb.append(precio);
-		
+
 		return sb.toString();
+	}
+
+	/**
+	 * Busca un coche en una lista de coches, por su matrícula. Si lo encuentra, devuelve 
+	 * el coche de la lista
+	 * @param coche
+	 * @param listaCoches
+	 * @return
+	 */
+	public static Coche find(Coche coche,List<Coche> listaCoches){
+		
+		for(Coche cocheEnLista:listaCoches){
+			if (coche.getMatricula().equals(cocheEnLista.getMatricula())){
+				return cocheEnLista;
+			}
+		}
+		
+		return null;
 	}
 
 }

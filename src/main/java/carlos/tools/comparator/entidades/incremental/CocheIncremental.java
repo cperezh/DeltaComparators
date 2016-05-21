@@ -5,6 +5,10 @@ import carlos.tools.comparator.entidades.Coche;
 public class CocheIncremental extends Coche {
 
 	private Concepto concepto;
+	
+	public CocheIncremental(Coche coche){
+		super(coche);
+	}
 
 	public Concepto getConcepto() {
 		return concepto;
