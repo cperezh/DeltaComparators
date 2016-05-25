@@ -148,7 +148,7 @@ public class ComparadorTest extends TestCase {
 	}
 
 	/**
-	 * Verifica que todos los elementos de la lista ListaCoches tieneN el
+	 * Verifica que todos los elementos de la lista ListaCoches tienen el
 	 * concepto en cochesIncremental
 	 * 
 	 * @param cochesIncremental
@@ -164,7 +164,7 @@ public class ComparadorTest extends TestCase {
 
 		for (Coche coche : listaCoches) {
 
-			cocheIncremental = buscarCoche(cochesIncremental, coche);
+			cocheIncremental =(CocheIncremental) Coche.find(coche,cochesIncremental);
 
 			if (cocheIncremental==null || cocheIncremental.getConcepto() != concepto) {
 				verificar = false;
@@ -174,17 +174,5 @@ public class ComparadorTest extends TestCase {
 		return verificar;
 
 	}
-
-	private CocheIncremental buscarCoche(List<CocheIncremental> cochesIncremental, Coche coche) {
-
-		for (CocheIncremental cocheIncremental : cochesIncremental) {
-			if (cocheIncremental.getMatricula().equals(coche.getMatricula())) {
-				return cocheIncremental;
-			}
-		}
-
-		return null;
-	}
-
 	
 }

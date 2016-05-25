@@ -116,7 +116,7 @@ public class Coche {
 	 * @param listaCoches
 	 * @return
 	 */
-	public static Coche find(Coche coche,List<Coche> listaCoches){
+	public static Coche find(Coche coche,List<? extends Coche> listaCoches){
 		
 		for(Coche cocheEnLista:listaCoches){
 			if (coche.getMatricula().equals(cocheEnLista.getMatricula())){

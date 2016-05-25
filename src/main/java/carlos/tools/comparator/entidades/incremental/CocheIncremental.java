@@ -2,6 +2,11 @@ package carlos.tools.comparator.entidades.incremental;
 
 import carlos.tools.comparator.entidades.Coche;
 
+
+/*
+ * //TODO: Añadir la fecha de generacion del registro incremental
+ * Añadir fecha inicio vigencia y fecha fin vigencia del registro
+ */
 public class CocheIncremental extends Coche {
 
 	private Concepto concepto;
@@ -16,5 +21,13 @@ public class CocheIncremental extends Coche {
 
 	public void setConcepto(Concepto concepto) {
 		this.concepto = concepto;
+	}
+	
+	public String toString(){
+		StringBuilder sb = new StringBuilder(super.toString());
+		sb.append("|");
+		sb.append(concepto);
+
+		return sb.toString(); 
 	}
 }

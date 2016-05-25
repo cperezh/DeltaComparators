@@ -33,26 +33,33 @@ public class Comparador {
 		List<CocheIncremental> listaIncremental = new ArrayList<CocheIncremental>();
 
 		for (Coche coche : listaNueva) {
-			
-			cocheInicial = Coche.find(coche, listaInicial);
-			
-			// Si el coche está en la lista inicial
-			if (cocheInicial!=null) {
 
-				//Si es diferente al cocheInicial, genero M
+			//Creo el coche para enviar en el incremental
+			cocheIncremental = new CocheIncremental(coche);
+
+			//Busco el coche incremental en la lista inicial, para determinar el concepto de envío
+			cocheInicial = Coche.find(coche, listaInicial);
+
+			// Si el coche está en la lista inicial
+			if (cocheInicial != null) {
+				// Si es diferente al cocheInicial, genero M
 				if (!cocheInicial.equals(coche)) {
-					cocheIncremental = new CocheIncremental(coche);
 					cocheIncremental.setConcepto(Concepto.M);
-					
-					listaIncremental.add(cocheIncremental);
 				}
 			}
+			// Si el coche no esta en la lista inicial
+			else {
+				cocheIncremental.setConcepto(Concepto.A);
+			}
+
+			listaIncremental.add(cocheIncremental);
 		}
+		
 		return listaIncremental;
 	}
 
 	private List<CocheIncremental> generarBajas(List<Coche> listaInicial, List<Coche> listaNueva) {
-		return null;
+		return new ArrayList<CocheIncremental>();
 	}
 
 }
