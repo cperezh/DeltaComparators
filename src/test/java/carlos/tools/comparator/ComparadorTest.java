@@ -42,27 +42,30 @@ public class ComparadorTest extends TestCase {
 		List<Coche> nuevosCoches;
 		List<Coche> cochesModificados;
 		List<Coche> cochesBorrados;
+		List<Coche> cochesNoModificados;
 
 		Comparador comparador = new Comparador();
 
 		listaInicial = generarListaInicial();
 
 		listaNueva = generarListaNueva(listaInicial);
-
+		
 		nuevosCoches = generarCochesPruebaA(listaNueva);
 
 		cochesModificados = generarCochesPruebaM(listaNueva);
 
 		cochesBorrados = generarCochesPruebaB(listaNueva);
-
+		
+		cochesNoModificados = generarCochesPruebaNoModificados(listaInicial);
+		
 		cochesIncremental = comparador.generarIncremental(listaInicial, listaNueva);
 
-		assertTrue(comprobarExitoPrueba(cochesIncremental, nuevosCoches, cochesModificados, cochesBorrados));
+		assertTrue(comprobarExitoPrueba(cochesIncremental, nuevosCoches, cochesModificados, cochesBorrados,cochesNoModificados));
 	}
 
 	private List<Coche> generarListaInicial() {
 
-		List<Coche> listaInicial = CocheTestUtils.generarListaCochesAleatorios(3);
+		List<Coche> listaInicial = CocheTestUtils.generarListaCochesAleatorios(5);
 
 		return listaInicial;
 	}
@@ -116,12 +119,32 @@ public class ComparadorTest extends TestCase {
 	private List<Coche> generarCochesPruebaB(List<Coche> listaInicial) {
 
 		List<Coche> listaPruebaB = new ArrayList<Coche>();
+		Coche coche1;
+		Coche coche2;
+		
+		coche1 = listaInicial.get(2);
+		coche2 = listaInicial.get(3);
+		
+		listaInicial.remove(coche1);
+		
+		listaInicial.remove(coche2);
+		
+		listaPruebaB.add(coche1);
+		
+		listaPruebaB.add(coche2);
 
-		listaPruebaB.add(listaInicial.get(2));
-
-		listaInicial.remove(2);
+	
 
 		return listaPruebaB;
+	}
+	
+	private List<Coche> generarCochesPruebaNoModificados(List<Coche> listaInicial) {
+
+		List<Coche> listaPruebaNoModificados = new ArrayList<Coche>();
+
+		listaPruebaNoModificados.add(listaInicial.get(4));
+
+		return listaPruebaNoModificados;
 	}
 
 	/**
@@ -134,9 +157,9 @@ public class ComparadorTest extends TestCase {
 	 * @return
 	 */
 	private boolean comprobarExitoPrueba(List<CocheIncremental> cochesIncremental, List<Coche> nuevosCoches,
-			List<Coche> cochesModificados, List<Coche> cochesBorrados) {
+			List<Coche> cochesModificados, List<Coche> cochesBorrados,  List<Coche> cochesNoModificados) {
 
-		Boolean nuevosOk, modificadosOk, borradoOk;
+		Boolean nuevosOk, modificadosOk, borradoOk, noModificadosOk;
 
 		nuevosOk = verificarIncremental(cochesIncremental, nuevosCoches, Concepto.A);
 		
@@ -144,7 +167,9 @@ public class ComparadorTest extends TestCase {
 		
 		borradoOk = verificarIncremental(cochesIncremental, cochesBorrados, Concepto.B);
 		
-		return nuevosOk && modificadosOk && borradoOk;
+		noModificadosOk = CocheIncremental.find(cochesNoModificados.get(0),cochesIncremental)==null;
+		
+		return nuevosOk && modificadosOk && borradoOk && noModificadosOk;
 	}
 
 	/**
