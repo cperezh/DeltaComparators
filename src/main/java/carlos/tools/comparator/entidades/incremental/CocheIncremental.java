@@ -5,7 +5,6 @@ import carlos.tools.comparator.entidades.Coche;
 
 /*
  * //TODO: Añadir la fecha de generacion del registro incremental
- * Añadir fecha inicio vigencia y fecha fin vigencia del registro
  */
 public class CocheIncremental extends Coche {
 
